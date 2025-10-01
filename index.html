@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>404!Soul Not Found!</title>
+  <title>Soul Not Found!</title>
   <style>
     * {
   margin: 0;
@@ -72,6 +72,23 @@ button:hover {
   /* Gentle pulse on countdown */
   animation: pulse 1.2s infinite;
 }
+/* Add this to your existing CSS */
+.broken-font * {
+  font-family: 'Courier New', monospace !important;
+  letter-spacing: -1px !important;
+  line-height: 0.8 !important;
+}
+.broken-font {
+  animation: glitch 0.1s infinite;
+}
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -113,7 +130,7 @@ button:hover {
   </audio>
 
   <script>
-  // Fake "AI" eulogy fragments (trained on digital decay)
+    // Fake "AI" eulogy fragments (trained on digital decay)
 const fragments = [
   "Here lies a soul lost in infinite scroll.",
   "They died mid-tweet, survived by 3 unread LinkedIn messages.",
@@ -137,6 +154,31 @@ const userAgents = [
 
 function getRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// Break and reconnect title when page loads
+window.addEventListener('load', function() {
+  setTimeout(() => {
+    breakAndReconnectTitle();
+  }, 500); // Small delay for better effect
+});
+
+function breakAndReconnectTitle() {
+  const title = document.querySelector('h1');
+  const originalText = title.textContent;
+  
+  // Split title into individual characters
+  let brokenText = '';
+  for (let char of originalText) {
+    brokenText += `<span style="
+      display: inline-block;
+      animation: fallAndReturn 2s ease-in-out forwards;
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    ">${char}</span>`;
+  }
+  
+  title.innerHTML = brokenText;
 }
 
 function generateEulogy() {
@@ -167,17 +209,25 @@ function generateEulogy() {
     }
   }, 300);
 
-  // Self-destruct countdown
+  // Self-destruct countdown with beep and flashing
   let timeLeft = 10;
   const countdownEl = document.getElementById('countdown');
   countdownEl.textContent = `Self-destruct: ${timeLeft}s`;
+
   const timer = setInterval(() => {
     timeLeft--;
     countdownEl.textContent = `Self-destruct: ${timeLeft}s`;
+    
+    // Play beep sound
+    playBeep();
+    
     if (timeLeft <= 0) {
       clearInterval(timer);
-      // 💥 THE APOCALYPSE - REPLACE WITH FINAL MESSAGE
-      document.body.innerHTML = '<h1 style="color:#f00; font-size:3rem; text-align:center; margin-top:20vh;">THE END!</h1>';
+      // 💥 THE APOCALYPSE
+      document.body.innerHTML = '<h1 style="color:#f00; font-size:3rem; text-align:center; margin-top:20vh;">THE END</h1>';
+      
+      // Start flashing effect
+      startFlashing();
       
       // Play horror sound when "THE END" appears
       playHorrorSound();
@@ -186,9 +236,58 @@ function generateEulogy() {
       // Bonus cursed behavior: flip page if inspected
       setTimeout(() => {
         document.body.style.transform = 'scaleX(-1)';
-      }, 20);  // Changed to 20ms as requested
+      }, 20);
     }
   }, 1000);
+}
+
+// Play beep sound function
+function playBeep() {
+  try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); // High pitch beep
+    
+    // Connect nodes
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    // Set volume and start/stop
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Low volume
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.1); // Beep for 0.1 seconds
+  } catch (e) {
+    // If audio fails, just continue (beep is optional)
+    console.log("Beep failed (apocalypse audio issues)", e);
+  }
+}
+
+// Start flashing effect function
+function startFlashing() {
+  let flashCount = 0;
+  const maxFlashes = 10; // Flash 10 times
+  
+  const flashInterval = setInterval(() => {
+    if (flashCount < maxFlashes) {
+      // Toggle background between black and white
+      if (flashCount % 2 === 0) {
+        document.body.style.background = '#ffffff';
+        document.body.style.color = '#000000';
+      } else {
+        document.body.style.background = '#000000';
+        document.body.style.color = '#ffffff';
+      }
+      flashCount++;
+    } else {
+      clearInterval(flashInterval);
+      // Return to original colors
+      document.body.style.background = '#000000';
+      document.body.style.color = '#0f0';
+    }
+  }, 100); // Flash every 100ms
 }
 
 // Play horror sound function
@@ -219,7 +318,7 @@ function playHorrorSound() {
     gainNode.connect(audioCtx.destination);
     
     // Set volume and start/stop
-    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
     oscillator.start();
     oscillator.stop(audioCtx.currentTime + 0.5); // Play for 0.5 seconds
   } catch (e) {
@@ -270,9 +369,29 @@ function createFallingSkull() {
   }, 6000);
 }
 
-// Add the CSS animation for falling
+// Add the CSS animation for falling characters
 const style = document.createElement('style');
 style.textContent = `
+  @keyframes fallAndReturn {
+    0% {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateY(30px) rotate(10deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+  }
+`;
+document.head.appendChild(style);
+
+// Add the CSS animation for falling
+const fallStyle = document.createElement('style');
+fallStyle.textContent = `
   @keyframes fall {
     to {
       transform: translateY(105vh) rotate(5deg);
@@ -280,8 +399,7 @@ style.textContent = `
     }
   }
 `;
-document.head.appendChild(style);
-  
+document.head.appendChild(fallStyle);
   </script>
 </body>
 </html>
