@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404!Soul Not Found!</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Courier New', 'Courier', monospace;
+  letter-spacing: -0.5px;
+}
+body {
+  background: #000;
+  color: #0f0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  /* CRT scanlines — subtle apocalyptic vibe */
+  background-image: 
+    linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #0f0, 0 0 20px #0a0;
+  letter-spacing: 2px;
+  animation: flicker 3s infinite alternate;
+}
+p {
+  margin: 15px 0;
+  line-height: 1.4;
+}
+.eulogy {
+  background: rgba(0, 20, 0, 0.3);
+  padding: 20px;
+  border: 1px solid #0a0;
+  margin: 20px 0;
+  border-radius: 4px;
+  font-family: 'Courier New', 'Courier', monospace;
+  font-size: 1.1rem;
+  letter-spacing: -0.3px;
+  line-height: 1.5;
+}
+button {
+  background: transparent;
+  color: #0f0;
+  border: 1px solid #0a0;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+button:hover {
+  background: #0a0;
+  transform: scale(1.05);
+}
+.countdown {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #f00;
+  /* Gentle pulse on countdown */
+  animation: pulse 1.2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.glitch {
+  animation: glitch 0.3s infinite;
+}
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 10px #0f0, 0 0 20px #0a0;
+  }
+  20%, 24%, 55% {
+    opacity: 0.8;
+    text-shadow: none;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>404! Soul Not Found!</h1>
+    <p>The internet is gone.<br>But your digital ghost lingers...</p>
+    <button onclick="generateEulogy()">Mourn My Digital Soul</button>
+    <div id="eulogy" class="eulogy" style="display:none;"></div>
+    <div id="countdown" class="countdown"></div>
+  </div>
+
+  <audio id="dirge" preload="auto">
+    <source src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+  </audio>
+
+  <script>
+  // Fake "AI" eulogy fragments (trained on digital decay)
+const fragments = [
+  "Here lies a soul lost in infinite scroll.",
+  "They died mid-tweet, survived by 3 unread LinkedIn messages.",
+  "Their last search: 'how to be happy'.",
+  "Cache expired. Heart did not.",
+  "They believed in open source, but their love was proprietary.",
+  "RIP to the unsent DMs and half-written novels.",
+  "They refreshed too many times. The void refreshed back.",
+  "Their memes outlived them. Barely.",
+  "They tried to npm install meaning. It failed.",
+  "Last seen arguing about tabs vs spaces in a server that no longer exists."
+];
+
+const userAgents = [
+  "a ghost in the machine",
+  "a tab left open since 2019",
+  "a forgotten Discord account",
+  "a Google Doc titled 'ideas (final v3 FINAL).docx'",
+  "someone who almost posted that story"
+];
+
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateEulogy() {
+  const soul = getRandom(userAgents);
+  const line1 = `You are now viewing the digital ghost of ${soul}.`;
+  const line2 = getRandom(fragments);
+  const line3 = "This page will self-destruct in 10 seconds. No backups. No afterlife.";
+
+  document.getElementById('eulogy').innerHTML = `${line1}<br><br>${line2}<br><br><em>${line3}</em>`;
+  document.getElementById('eulogy').style.display = 'block';
+  document.getElementById('eulogy').classList.add('glitch');
+
+  // Play funeral dirge
+  const audio = document.getElementById('audio');
+  const dirge = document.getElementById('dirge');
+  dirge.volume = 0.6;
+  dirge.play().catch(e => console.log("Audio autoplay blocked (even in apocalypse)"));
+
+  // Corrupt audio over time (bug as feature)
+  let vol = 0.6;
+  const corrupt = setInterval(() => {
+    vol -= 0.05;
+    if (vol <= 0) {
+      dirge.pause();
+      clearInterval(corrupt);
+    } else {
+      dirge.volume = vol;
+    }
+  }, 300);
+
+  // Self-destruct countdown
+  let timeLeft = 10;
+  const countdownEl = document.getElementById('countdown');
+  countdownEl.textContent = `Self-destruct: ${timeLeft}s`;
+  const timer = setInterval(() => {
+    timeLeft--;
+    countdownEl.textContent = `Self-destruct: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      // 💥 THE APOCALYPSE - REPLACE WITH FINAL MESSAGE
+      document.body.innerHTML = '<h1 style="color:#f00; font-size:3rem; text-align:center; margin-top:20vh;">THE END!</h1>';
+      
+      // Play horror sound when "THE END" appears
+      playHorrorSound();
+      
+      console.warn("Don't look too close. The void is looking back.");
+      // Bonus cursed behavior: flip page if inspected
+      setTimeout(() => {
+        document.body.style.transform = 'scaleX(-1)';
+      }, 20);  // Changed to 20ms as requested
+    }
+  }, 1000);
+}
+
+// Play horror sound function
+function playHorrorSound() {
+  try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // Create a "scream" sound (low frequency + distortion)
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    const distortion = audioCtx.createWaveShaper();
+    
+    oscillator.type = 'sawtooth';
+    oscillator.frequency.setValueAtTime(50, audioCtx.currentTime); // Low frequency = scary
+    
+    // Add distortion for horror effect
+    const curve = new Float32Array(256);
+    for (let i = 0; i < 256; i++) {
+      const x = (i - 128) / 128;
+      curve[i] = (3 + 1) * x * 0.5 / (1 + Math.abs(x) * 1);
+    }
+    distortion.curve = curve;
+    distortion.oversample = '4x';
+    
+    // Connect nodes
+    oscillator.connect(distortion);
+    distortion.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    // Set volume and start/stop
+    gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 0.5); // Play for 0.5 seconds
+  } catch (e) {
+    // If audio fails, console.log the error (just adds to the cursed chaos)
+    console.warn("Audio failed (as expected in apocalypse)", e);
+  }
+}
+
+// Easter egg: inspect element flips the page
+console.warn("Don't look too close. The void is looking back.");
+
+// Falling skull tied with rope (starts after 5 seconds)
+setTimeout(() => {
+  createFallingSkull();
+}, 5000); // 5000ms = 5 seconds
+
+function createFallingSkull() {
+  const container = document.createElement('div');
+  container.innerHTML = `
+    <div style="
+      position: fixed;
+      top: -100px;
+      right: 50px;
+      z-index: 1000;
+      pointer-events: none;
+      animation: fall 6s linear forwards;
+    ">
+      <div style="
+        font-size: 24px;
+        color: #0f0;
+        text-shadow: 0 0 5px #0f0;
+        transform: rotate(-10deg);
+      ">💀</div>
+      <div style="
+        height: 20px;
+        width: 2px;
+        background: #0f0;
+        margin: 0 auto;
+        opacity: 0.7;
+      "></div>
+    </div>
+  `;
+  document.body.appendChild(container);
+
+  // Remove after animation
+  setTimeout(() => {
+    container.remove();
+  }, 6000);
+}
+
+// Add the CSS animation for falling
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fall {
+    to {
+      transform: translateY(105vh) rotate(5deg);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
+  
+  </script>
+</body>
+</html>
