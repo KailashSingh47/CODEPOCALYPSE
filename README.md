@@ -60,14 +60,5 @@ Built for maximum chaos with minimum sanity.
 
 ---
 
-## 🏅 Why this wins Codepocalypse
-
-- **Fake audio + fake AI = peak cursed creativity**
-- **Self-destructs with "THE END"** instead of black screen
-- **Falling skull tied with rope** (visual horror)
-- **Horror screams** when apocalypse completes
-- **Mirror flip** (reality breaks when you die)
-- **Built in 2 hours** (sleep-deprived genius)
-- **All in 1 HTML file** (maximum chaos, minimum dependencies)
 
 > **"The internet is gone, but your digital ghost lingers... for 10 seconds."**
